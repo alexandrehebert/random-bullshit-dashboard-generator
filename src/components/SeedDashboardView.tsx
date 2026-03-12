@@ -331,7 +331,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-75">Region</p>
                   <div
                     className={`inline-flex items-center gap-2 border px-3 py-1.5 text-xs uppercase tracking-[0.14em] ${
-                      isCorporate ? "rounded-sm border-slate-700/30 bg-slate-200/80" : "rounded-full border-black/20 bg-black/10"
+                      isCorporate
+                        ? "rounded-sm border-slate-700/30 bg-slate-200/80"
+                        : isMidnight
+                          ? "rounded-sm border-slate-400/35 bg-slate-800/75"
+                          : "rounded-full border-black/20 bg-black/10"
                     }`}
                   >
                     <Users size={13} />
@@ -343,7 +347,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-75">Scenario</p>
                   <div
                     className={`border px-3 py-2 text-xs font-medium uppercase tracking-[0.14em] ${
-                      isCorporate ? "rounded-sm border-slate-700/30 bg-slate-50" : "rounded-xl border-black/15 bg-white/55"
+                      isCorporate
+                        ? "rounded-sm border-slate-700/30 bg-slate-50"
+                        : isMidnight
+                          ? "rounded-sm border-slate-500/35 bg-slate-900/70"
+                          : "rounded-xl border-black/15 bg-white/55"
                     }`}
                   >
                     {selectedScenario}
@@ -364,9 +372,13 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                             isSelected
                               ? isCorporate
                                 ? "border-slate-700/35 bg-slate-300/70"
+                                : isMidnight
+                                  ? "border-slate-400/35 bg-slate-800/80"
                                 : "border-black/25 bg-black/15"
                               : isCorporate
                                 ? "border-slate-700/20 bg-slate-100/60 opacity-75"
+                                : isMidnight
+                                  ? "border-slate-500/30 bg-slate-900/65 opacity-80"
                                 : "border-black/15 bg-white/35 opacity-75"
                           }`}
                         >
@@ -387,7 +399,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                       <li
                         key={`m-${toggle.label}`}
                         className={`flex items-center justify-between gap-3 border px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] ${
-                          isCorporate ? "rounded-sm border-slate-700/20 bg-slate-50/80" : "rounded-lg border-black/15 bg-white/40"
+                          isCorporate
+                            ? "rounded-sm border-slate-700/20 bg-slate-50/80"
+                            : isMidnight
+                              ? "rounded-sm border-slate-500/30 bg-slate-900/65"
+                              : "rounded-lg border-black/15 bg-white/40"
                         }`}
                       >
                         <span className="opacity-85">{toggle.label}</span>
@@ -398,9 +414,13 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                             toggle.enabled
                               ? isCorporate
                                 ? "border-slate-700/35 bg-slate-300/70"
+                                : isMidnight
+                                  ? "border-sky-300/35 bg-slate-800/80 text-sky-200"
                                 : "border-emerald-700/40 bg-emerald-100 text-emerald-900"
                               : isCorporate
                                 ? "border-slate-700/20 bg-slate-100"
+                                : isMidnight
+                                  ? "border-slate-500/30 bg-slate-900/60 text-slate-300"
                                 : "border-zinc-500/30 bg-zinc-200/70 text-zinc-700"
                           }`}
                         >
@@ -427,7 +447,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                 <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-75">Region</p>
                 <div
                   className={`inline-flex items-center gap-2 border px-3 py-1.5 text-xs uppercase tracking-[0.14em] ${
-                    isCorporate ? "rounded-sm border-slate-700/30 bg-slate-200/80" : "rounded-full border-black/20 bg-black/10"
+                    isCorporate
+                      ? "rounded-sm border-slate-700/30 bg-slate-200/80"
+                      : isMidnight
+                        ? "rounded-sm border-slate-400/35 bg-slate-800/75"
+                        : "rounded-full border-black/20 bg-black/10"
                   }`}
                 >
                   <Users size={13} />
@@ -439,7 +463,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                 <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.18em] opacity-75">Scenario</p>
                 <div
                   className={`border px-3 py-2 text-xs font-medium uppercase tracking-[0.14em] ${
-                    isCorporate ? "rounded-sm border-slate-700/30 bg-slate-50" : "rounded-xl border-black/15 bg-white/55"
+                    isCorporate
+                      ? "rounded-sm border-slate-700/30 bg-slate-50"
+                      : isMidnight
+                        ? "rounded-sm border-slate-500/35 bg-slate-900/70"
+                        : "rounded-xl border-black/15 bg-white/55"
                   }`}
                 >
                   {selectedScenario}
@@ -460,9 +488,13 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                           isSelected
                             ? isCorporate
                               ? "border-slate-700/35 bg-slate-300/70"
+                              : isMidnight
+                                ? "border-slate-400/35 bg-slate-800/80"
                               : "border-black/25 bg-black/15"
                             : isCorporate
                               ? "border-slate-700/20 bg-slate-100/60 opacity-75"
+                              : isMidnight
+                                ? "border-slate-500/30 bg-slate-900/65 opacity-80"
                               : "border-black/15 bg-white/35 opacity-75"
                         }`}
                       >
@@ -483,7 +515,11 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                     <li
                       key={toggle.label}
                       className={`flex items-center justify-between gap-3 border px-2.5 py-1.5 text-[11px] uppercase tracking-[0.12em] ${
-                        isCorporate ? "rounded-sm border-slate-700/20 bg-slate-50/80" : "rounded-lg border-black/15 bg-white/40"
+                        isCorporate
+                          ? "rounded-sm border-slate-700/20 bg-slate-50/80"
+                          : isMidnight
+                            ? "rounded-sm border-slate-500/30 bg-slate-900/65"
+                            : "rounded-lg border-black/15 bg-white/40"
                       }`}
                     >
                       <span className="opacity-85">{toggle.label}</span>
@@ -494,9 +530,13 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
                           toggle.enabled
                             ? isCorporate
                               ? "border-slate-700/35 bg-slate-300/70"
+                              : isMidnight
+                                ? "border-sky-300/35 bg-slate-800/80 text-sky-200"
                               : "border-emerald-700/40 bg-emerald-100 text-emerald-900"
                             : isCorporate
                               ? "border-slate-700/20 bg-slate-100"
+                              : isMidnight
+                                ? "border-slate-500/30 bg-slate-900/60 text-slate-300"
                               : "border-zinc-500/30 bg-zinc-200/70 text-zinc-700"
                         }`}
                       >
