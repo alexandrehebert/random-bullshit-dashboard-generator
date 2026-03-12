@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f5ea;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-display: var(--font-bungee);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), sans-serif;
+  overflow-y: auto;
+}
+
+.dashboard-shell {
+  --dashboard-font-body: var(--font-space-grotesk);
+  --dashboard-font-heading: var(--font-bungee);
+  font-family: var(--dashboard-font-body), sans-serif;
+}
+
+.dashboard-shell h1,
+.dashboard-shell h2,
+.dashboard-shell h3,
+.dashboard-shell h4 {
+  font-family: var(--dashboard-font-heading), sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.theme-corporate {
+  --dashboard-font-body: var(--font-ibm-plex-sans);
+  --dashboard-font-heading: var(--font-ibm-plex-sans);
+}
+
+.theme-midnight {
+  --dashboard-font-body: var(--font-space-grotesk);
+  --dashboard-font-heading: var(--font-space-grotesk);
+}
+
+.theme-cyberpunk {
+  --dashboard-font-body: var(--font-space-grotesk);
+  --dashboard-font-heading: var(--font-orbitron);
+}
+
+.theme-retro {
+  --dashboard-font-body: var(--font-jetbrains-mono);
+  --dashboard-font-heading: var(--font-jetbrains-mono);
+}
+
+.theme-clean {
+  --dashboard-font-body: var(--font-space-grotesk);
+  --dashboard-font-heading: var(--font-space-grotesk);
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  cursor: pointer;
+}
+
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled,
+input[type="reset"]:disabled {
+  cursor: not-allowed;
+}
+
+main {
+  animation: reveal 500ms ease-out;
+}
+
+article {
+  animation: card-in 420ms ease both;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
