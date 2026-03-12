@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Bell,
   Building2,
@@ -10,6 +12,7 @@ import {
   SlidersHorizontal,
   Users,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 import { getStylePreset } from "@/lib/stylePresets";
 import {
@@ -53,6 +56,30 @@ const hashValue = (value: string): number => {
 };
 
 export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+      if (!isMobileMenuOpen) {
+        return;
+      }
+
+      const target = event.target as Node | null;
+      if (mobileMenuRef.current && target && !mobileMenuRef.current.contains(target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isMobileMenuOpen]);
+
   const decoded = decodeShareSeed(seed);
   const normalizedSeed = decoded.seed;
   const style = decoded.style;
@@ -91,7 +118,7 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
         className={`dashboard-shell ${preset.fontClass} relative w-full border-0 bg-gradient-to-br px-4 sm:px-8 ${preset.shellClass}`}
       >
         <header
-          className={`-mx-4 mb-6 border-b px-4 py-4 backdrop-blur-md sm:-mx-8 sm:px-8 ${
+          className={`-mx-4 relative z-30 mb-6 border-b px-4 py-4 backdrop-blur-md sm:-mx-8 sm:px-8 ${
             isCorporate
               ? "border-slate-700/20 bg-slate-100/80"
               : isMidnight
@@ -120,8 +147,12 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
               </div>
             </div>
 
-            <details className="group relative shrink-0 sm:hidden">
-              <summary
+            <div className="relative shrink-0 sm:hidden" ref={mobileMenuRef}>
+              <button
+                type="button"
+                aria-label="Toggle dashboard menu"
+                aria-expanded={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen((current) => !current)}
                 className={`flex cursor-pointer list-none items-center gap-1 border px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] ${
                   isCorporate
                     ? "rounded-sm border-slate-700/25 bg-slate-200/85 text-slate-900"
@@ -132,77 +163,79 @@ export function SeedDashboardView({ seed }: SeedDashboardViewProps) {
               >
                 <Menu size={14} />
                 Menu
-              </summary>
+              </button>
 
-              <div
-                className={`absolute top-full right-0 z-20 mt-2 w-[min(84vw,320px)] border p-3 shadow-xl ${
-                  isCorporate
-                    ? "rounded-md border-slate-700/25 bg-slate-100/95 text-slate-900"
-                    : isMidnight
-                      ? "rounded-md border-slate-500/35 bg-slate-900/96 text-slate-100"
-                      : "rounded-2xl border-black/15 bg-white/95"
-                }`}
-              >
-                <div className="mb-2 grid grid-cols-2 gap-2 text-[10px] uppercase tracking-[0.14em]">
-                  <span
-                    className={`inline-flex items-center gap-1 border px-2 py-1 ${
-                      isCorporate
-                        ? "rounded-sm border-slate-700/25 bg-slate-200/80"
-                        : isMidnight
-                          ? "rounded-sm border-slate-400/35 bg-slate-800/75"
-                          : "rounded-full border-black/20 bg-black/10"
-                    }`}
-                  >
-                    <ShieldCheck size={12} />
-                    {isCorporate ? "SOX" : "Audit"}
-                  </span>
-                  <span
-                    className={`inline-flex items-center gap-1 border px-2 py-1 ${
-                      isCorporate
-                        ? "rounded-sm border-slate-700/25 bg-slate-200/80"
-                        : isMidnight
-                          ? "rounded-sm border-slate-400/35 bg-slate-800/75"
-                          : "rounded-full border-black/20 bg-black/10"
-                    }`}
-                  >
-                    <Bell size={12} />
-                    3 Alerts
-                  </span>
-                </div>
-
-                <div className="space-y-1.5 pt-1">
-                  {TAB_MENU.map((tabItem) => {
-                    const TabIcon = tabItem.icon;
-                    return (
-                    <div
-                      key={`m-${tabItem.label}`}
-                      className={`flex items-center justify-between border px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] ${
-                        isCorporate ? "rounded-sm" : "rounded-xl"
-                      } ${
-                        tabItem.label === activeTab
-                          ? isCorporate
-                            ? "border-slate-700/35 bg-slate-300/70"
-                            : isMidnight
-                              ? "border-sky-300/40 bg-slate-800/90"
-                            : "border-black/30 bg-black/15"
-                          : isCorporate
-                            ? "border-slate-700/20 bg-slate-100/75"
-                            : isMidnight
-                              ? "border-slate-500/30 bg-slate-900/65"
-                            : "border-black/15 bg-white/45"
+              {isMobileMenuOpen && (
+                <div
+                  className={`absolute top-full right-0 z-[90] mt-2 w-[min(84vw,320px)] border p-3 shadow-xl ${
+                    isCorporate
+                      ? "rounded-md border-slate-700/25 bg-slate-100/95 text-slate-900"
+                      : isMidnight
+                        ? "rounded-md border-slate-500/35 bg-slate-900/96 text-slate-100"
+                        : "rounded-2xl border-black/15 bg-white/95"
+                  }`}
+                >
+                  <div className="mb-2 grid grid-cols-2 gap-2 text-[10px] uppercase tracking-[0.14em]">
+                    <span
+                      className={`inline-flex items-center gap-1 border px-2 py-1 ${
+                        isCorporate
+                          ? "rounded-sm border-slate-700/25 bg-slate-200/80"
+                          : isMidnight
+                            ? "rounded-sm border-slate-400/35 bg-slate-800/75"
+                            : "rounded-full border-black/20 bg-black/10"
                       }`}
                     >
-                      <span className="inline-flex items-center gap-1.5">
-                        <TabIcon size={13} />
-                        {tabItem.label}
-                      </span>
-                      {tabItem.label === activeTab && <span className="text-[10px] opacity-75">active</span>}
-                    </div>
-                    );
-                  })}
+                      <ShieldCheck size={12} />
+                      {isCorporate ? "SOX" : "Audit"}
+                    </span>
+                    <span
+                      className={`inline-flex items-center gap-1 border px-2 py-1 ${
+                        isCorporate
+                          ? "rounded-sm border-slate-700/25 bg-slate-200/80"
+                          : isMidnight
+                            ? "rounded-sm border-slate-400/35 bg-slate-800/75"
+                            : "rounded-full border-black/20 bg-black/10"
+                      }`}
+                    >
+                      <Bell size={12} />
+                      3 Alerts
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 pt-1">
+                    {TAB_MENU.map((tabItem) => {
+                      const TabIcon = tabItem.icon;
+                      return (
+                        <div
+                          key={`m-${tabItem.label}`}
+                          className={`flex items-center justify-between border px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] ${
+                            isCorporate ? "rounded-sm" : "rounded-xl"
+                          } ${
+                            tabItem.label === activeTab
+                              ? isCorporate
+                                ? "border-slate-700/35 bg-slate-300/70"
+                                : isMidnight
+                                  ? "border-sky-300/40 bg-slate-800/90"
+                                : "border-black/30 bg-black/15"
+                              : isCorporate
+                                ? "border-slate-700/20 bg-slate-100/75"
+                                : isMidnight
+                                  ? "border-slate-500/30 bg-slate-900/65"
+                                : "border-black/15 bg-white/45"
+                          }`}
+                        >
+                          <span className="inline-flex items-center gap-1.5">
+                            <TabIcon size={13} />
+                            {tabItem.label}
+                          </span>
+                          {tabItem.label === activeTab && <span className="text-[10px] opacity-75">active</span>}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            </details>
+              )}
+            </div>
           </div>
 
           <div className="hidden flex-col gap-3 sm:flex sm:flex-row sm:items-center sm:justify-between">
