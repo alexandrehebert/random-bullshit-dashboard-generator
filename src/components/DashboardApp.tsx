@@ -25,6 +25,25 @@ const isDashboardStyle = (value: string | null): value is DashboardStyle =>
 
 const randomSeed = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
+const randomStyle = (current: DashboardStyle): DashboardStyle => {
+  const candidates = DASHBOARD_STYLES.filter((value) => value !== current);
+  if (candidates.length === 0) {
+    return current;
+  }
+
+  const nextIndex = Math.floor(Math.random() * candidates.length);
+  return candidates[nextIndex] as DashboardStyle;
+};
+
+const randomCount = (current: number): number => {
+  let next = current;
+  while (next === current) {
+    next = Math.floor(Math.random() * (MAX_COUNT - MIN_COUNT + 1)) + MIN_COUNT;
+  }
+
+  return next;
+};
+
 export function DashboardApp() {
   const router = useRouter();
   const pathname = usePathname();
@@ -124,7 +143,11 @@ export function DashboardApp() {
   };
 
   const handleRegenerate = () => {
-    updateParams({ seed: randomSeed() });
+    setCount(randomCount(count));
+    updateParams({
+      seed: randomSeed(),
+      style: randomStyle(style),
+    });
   };
 
   const handleCountChange = (nextCount: number) => {

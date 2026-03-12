@@ -1,8 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5ea;
-  --foreground: #171717;
 }
 
 @theme inline {
@@ -29,6 +27,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-space-grotesk), sans-serif;
   overflow-y: auto;
+  min-height: 100vh;
 }
 
 .dashboard-shell {
